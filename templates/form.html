@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Water Delivery Log Entry</title>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            margin: 50px;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        form {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .form-item {
+            flex: 1 1 45%;
+        }
+
+        .form-full {
+            flex: 1 1 100%;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .options-group label {
+            font-weight: normal;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #004c99;
+        }
+    </style>
+</head>
+<body>
+    <h2>Water Delivery Log Entry</h2>
+    <form action="/submit" method="POST">
+
+        <div class="form-group">
+            <div class="form-item">
+                <label>Date</label>
+                <input type="date" name="date" value="{{ form_data.get('date', '') }}" required>
+            </div>
+            <div class="form-item">
+                <label>Quantity Purchased</label>
+                <input type="number" name="quantity_purchased" min="0" value="{{ form_data.get('quantity_purchased', '') }}" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-item">
+                <label>Customer Name</label>
+                <input type="text" name="customer_name">
+            </div>
+            <div class="form-item">
+                <label>Quantity Returned</label>
+                <input type="number" name="quantity_returned" min="0" value="{{ form_data.get('quantity_returned', '') }}">
+            </div>
+        </div>
+
+        <div class="form-group form-full">
+            <label>Brand</label>
+            <div class="options-group">
+                {% for brand in ['Aquafina', 'Bisleri', 'Bailey', 'Bistrol', 'Mc Dowell No 1'] %}
+                    <label><input type="radio" name="brand" value="{{ brand }}" required> {{ brand }}</label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-item">
+                <label>Type</label>
+                <div class="options-group">
+                    <label><input type="radio" name="type" value="Jar" required> Jar</label>
+                    <label><input type="radio" name="type" value="Carton"> Carton</label>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <label>Delivery Address</label>
+                <div class="options-group">
+                    {% for area in ['Kadamtala', 'Ichhapur', 'Bankra', 'Baltikuri', 'Maidan', 'Shibpur'] %}
+                        <label><input type="radio" name="address" value="{{ area }}" required> {{ area }}</label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="form-item form-full">
+                <label>Delivery Man</label>
+                <div class="options-group">
+                    {% for dman in ['Delivery 1', 'Delivery 2', 'Delivery 3', 'Delivery 4'] %}
+                        <label><input type="radio" name="delivery_man" value="{{ dman }}" required> {{ dman }}</label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group form-full">
+            <button type="submit">Submit Entry</button>
+        </div>
+
+    </form>
+</body>
+</html>
